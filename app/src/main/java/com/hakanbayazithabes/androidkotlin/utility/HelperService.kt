@@ -2,7 +2,10 @@ package com.hakanbayazithabes.androidkotlin.utility
 
 import android.content.Context
 import com.google.gson.Gson
+import com.hakanbayazithabes.androidkotlin.models.ApiError
+import com.hakanbayazithabes.androidkotlin.models.ApiResponse
 import com.hakanbayazithabes.androidkotlin.models.TokenAPI
+import retrofit2.Response
 
 class HelperService {
     companion object {
@@ -15,8 +18,18 @@ class HelperService {
             editor.putString("token", Gson().toJson(token))
 
             editor.apply()
+        }
 
+        fun <T1, T2> handlerApiError(response: Response<T1>): ApiResponse<T2> {
+            var apiError: ApiError? = null
 
+            if (response.errorBody() != null) {
+                var errorBody = response.errorBody()!!.string()
+
+                apiError = Gson().fromJson(errorBody, ApiError::class.java)
+            }
+
+            return ApiResponse(false, null, apiError)
         }
     }
 }

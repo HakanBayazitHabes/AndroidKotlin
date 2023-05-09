@@ -1,5 +1,6 @@
 package com.hakanbayazithabes.androidkotlin.ApiServices
 
+import androidx.appcompat.widget.ThemedSpinnerAdapter.Helper
 import com.hakanbayazithabes.androidkotlin.BuildConfig
 import com.hakanbayazithabes.androidkotlin.consts.ApiConsts
 import com.hakanbayazithabes.androidkotlin.models.ApiResponse
@@ -27,7 +28,7 @@ class LoginService {
                 "bearer ${token.accessToken}"
             )
 
-            if (!signUpResponse.isSuccessful) return ApiResponse(false)
+            if (!signUpResponse.isSuccessful) return HelperService.handlerApiError(signUpResponse)
 
             return ApiResponse(true)
 
@@ -42,7 +43,7 @@ class LoginService {
                 signIn.Password
             )
 
-            if (!response.isSuccessful) return ApiResponse(false)
+            if (!response.isSuccessful) return HelperService.handlerApiError(response)
 
             var token = response.body() as TokenAPI
 
