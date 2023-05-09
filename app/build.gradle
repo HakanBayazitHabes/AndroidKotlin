@@ -3,6 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def apiKeyPropertiesFile = rootProject.file("apikey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
+
+
 android {
     namespace 'com.hakanbayazithabes.androidkotlin'
     compileSdk 33
@@ -15,6 +20,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "ClientId_CC", apiKeyProperties['ClientId_CC'])
+        buildConfigField("String", "Client_Secret_CC", apiKeyProperties['Client_Secret_CC'])
+        buildConfigField("String", "ClientId_ROP", apiKeyProperties['ClientId_ROP'])
+        buildConfigField("String", "Client_Secret_ROP", apiKeyProperties['Client_Secret_ROP'])
+
     }
 
     buildTypes {
@@ -34,9 +45,9 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
