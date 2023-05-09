@@ -14,12 +14,32 @@ class TokenService {
             ApiClient.builderService(ApiConsts.authBaseUrl, RetrofitTokenService::class.java, false)
 
         suspend fun getTokenWithClientCredentials(): ApiResponse<Token> {
-            var response = retrofitTokenServiceWithoutInterceptor.getTokenWithClientCredentials(BuildConfig.ClientId_CC, BuildConfig.Client_Secret_CC, ApiConsts.clientCredentialGrantType)
+            var response = retrofitTokenServiceWithoutInterceptor.getTokenWithClientCredentials(
+                BuildConfig.ClientId_CC,
+                BuildConfig.Client_Secret_CC,
+                ApiConsts.clientCredentialGrantType
+            )
 
             //Helper method yazılacak başarız durumlar için
             if (response.isSuccessful) return ApiResponse(false)
 
-            return  ApiResponse(true, response.body() as Token)
+            return ApiResponse(true, response.body() as Token)
+        }
+
+        suspend fun refreshToken(refreshToken: String): ApiResponse<Token> {
+            var response = retrofitTokenServiceWithoutInterceptor.refreshToken(
+                BuildConfig.ClientId_ROP,
+                BuildConfig.Client_Secret_ROP,
+                ApiConsts.resourceOwnerPasswordCredentialGrantType,
+                refreshToken
+            ).execute()
+
+            return if (response.isSuccessful) {
+                ApiResponse(true, response.body() as Token)
+            } else {
+                ApiResponse(false, response.body() as Token)
+            }
+
         }
     }
 }
