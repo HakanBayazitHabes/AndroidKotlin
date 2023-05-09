@@ -1,6 +1,6 @@
 package com.hakanbayazithabes.androidkotlin.retrofitService
 
-import com.hakanbayazithabes.androidkotlin.models.Token
+import com.hakanbayazithabes.androidkotlin.models.TokenAPI
 import com.hakanbayazithabes.androidkotlin.models.UserSignUp
 import retrofit2.Response
 import okhttp3.ResponseBody
@@ -24,5 +24,5 @@ interface RetrofitLoginService {
         @Field("grant_type") grantType: String,
         @Field("username") userName: String,
         @Field("password") password: String
-    ):Response<Token>
+    ):Response<TokenAPI>
 }

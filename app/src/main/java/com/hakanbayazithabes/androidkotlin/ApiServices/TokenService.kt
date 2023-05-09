@@ -1,13 +1,12 @@
 package com.hakanbayazithabes.androidkotlin.ApiServices
 
 import android.content.Context
-import android.os.Build
 import com.google.gson.Gson
 import com.hakanbayazithabes.androidkotlin.BuildConfig
 import com.hakanbayazithabes.androidkotlin.consts.ApiConsts
 import com.hakanbayazithabes.androidkotlin.models.ApiResponse
 import com.hakanbayazithabes.androidkotlin.models.Introspec
-import com.hakanbayazithabes.androidkotlin.models.Token
+import com.hakanbayazithabes.androidkotlin.models.TokenAPI
 import com.hakanbayazithabes.androidkotlin.retrofitService.ApiClient
 import com.hakanbayazithabes.androidkotlin.retrofitService.RetrofitTokenService
 import com.hakanbayazithabes.androidkotlin.utility.GlobalApp
@@ -18,7 +17,7 @@ class TokenService {
         private var retrofitTokenServiceWithoutInterceptor =
             ApiClient.builderService(ApiConsts.authBaseUrl, RetrofitTokenService::class.java, false)
 
-        suspend fun getTokenWithClientCredentials(): ApiResponse<Token> {
+        suspend fun getTokenWithClientCredentials(): ApiResponse<TokenAPI> {
             var response = retrofitTokenServiceWithoutInterceptor.getTokenWithClientCredentials(
                 BuildConfig.ClientId_CC,
                 BuildConfig.Client_Secret_CC,
@@ -28,10 +27,10 @@ class TokenService {
             //Helper method yazılacak başarız durumlar için
             if (response.isSuccessful) return ApiResponse(false)
 
-            return ApiResponse(true, response.body() as Token)
+            return ApiResponse(true, response.body() as TokenAPI)
         }
 
-        suspend fun refreshToken(refreshToken: String): ApiResponse<Token> {
+        suspend fun refreshToken(refreshToken: String): ApiResponse<TokenAPI> {
             var response = retrofitTokenServiceWithoutInterceptor.refreshToken(
                 BuildConfig.ClientId_ROP,
                 BuildConfig.Client_Secret_ROP,
@@ -40,9 +39,9 @@ class TokenService {
             ).execute()
 
             return if (response.isSuccessful) {
-                ApiResponse(true, response.body() as Token)
+                ApiResponse(true, response.body() as TokenAPI)
             } else {
-                ApiResponse(false, response.body() as Token)
+                ApiResponse(false, response.body() as TokenAPI)
             }
 
         }
@@ -52,7 +51,7 @@ class TokenService {
 
             var tokenString : String? = preferences.getString("token",null) ?: return ApiResponse(false)
 
-            var token:Token = Gson().fromJson(tokenString, Token::class.java)
+            var token:TokenAPI = Gson().fromJson(tokenString, TokenAPI::class.java)
 
             var authorization: String =
                 Credentials.basic("resource_product_api","apisecret")

@@ -3,12 +3,12 @@ package com.hakanbayazithabes.androidkotlin.ApiServices
 import com.hakanbayazithabes.androidkotlin.BuildConfig
 import com.hakanbayazithabes.androidkotlin.consts.ApiConsts
 import com.hakanbayazithabes.androidkotlin.models.ApiResponse
-import com.hakanbayazithabes.androidkotlin.models.Token
+import com.hakanbayazithabes.androidkotlin.models.TokenAPI
 import com.hakanbayazithabes.androidkotlin.models.UserSignIn
 import com.hakanbayazithabes.androidkotlin.models.UserSignUp
 import com.hakanbayazithabes.androidkotlin.retrofitService.ApiClient
 import com.hakanbayazithabes.androidkotlin.retrofitService.RetrofitLoginService
-import com.hakanbayazithabes.androidkotlin.retrofitService.RetrofitTokenService
+import com.hakanbayazithabes.androidkotlin.utility.HelperService
 
 class LoginService {
     companion object {
@@ -33,7 +33,7 @@ class LoginService {
 
         }
 
-        suspend fun signIn(signIn : UserSignIn) : ApiResponse<Unit> {
+        suspend fun signIn(signIn: UserSignIn): ApiResponse<Unit> {
             var response = retrofitTokenServiceWithoutInterceptor.signIn(
                 BuildConfig.ClientId_ROP,
                 BuildConfig.Client_Secret_ROP,
@@ -44,9 +44,9 @@ class LoginService {
 
             if (!response.isSuccessful) return ApiResponse(false)
 
-            var token = response.body() as Token
+            var token = response.body() as TokenAPI
 
-            //sharedPreferences kaydedilecek
+            HelperService.saveTokenSharedPreferences(token)
 
             return ApiResponse(false)
         }

@@ -1,8 +1,7 @@
 package com.hakanbayazithabes.androidkotlin.retrofitService
 
-import android.media.session.MediaSession
 import com.hakanbayazithabes.androidkotlin.models.Introspec
-import com.hakanbayazithabes.androidkotlin.models.Token
+import com.hakanbayazithabes.androidkotlin.models.TokenAPI
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Field
@@ -18,7 +17,7 @@ interface RetrofitTokenService {
         @Field("client_id") clientId: String,
         @Field("client_secret") clientSecret: String,
         @Field("grant_type") grantType: String
-    ): Response<Token>
+    ): Response<TokenAPI>
 
 
     @FormUrlEncoded
@@ -36,5 +35,5 @@ interface RetrofitTokenService {
         @Field("client_secret") clientSecret: String,
         @Field("grant_type") grantType: String,
         @Field("refresh_token") refreshToken: String
-    ): Call<Token>
+    ): Call<TokenAPI>
 }
