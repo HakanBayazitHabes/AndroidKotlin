@@ -36,28 +36,35 @@ class LoginService {
 
                 return ApiResponse(true)
             } catch (e: Exception) {
-                return HelperService.h(e)
+                return HelperService.handleException(e)
             }
 
 
         }
 
         suspend fun signIn(signIn: UserSignIn): ApiResponse<Unit> {
-            var response = retrofitTokenServiceWithoutInterceptor.signIn(
-                BuildConfig.ClientId_ROP,
-                BuildConfig.Client_Secret_ROP,
-                ApiConsts.resourceOwnerPasswordCredentialGrantType,
-                signIn.Email,
-                signIn.Password
-            )
 
-            if (!response.isSuccessful) return HelperService.handlerApiError(response)
+            try {
+                var response = retrofitTokenServiceWithoutInterceptor.signIn(
+                    BuildConfig.ClientId_ROP,
+                    BuildConfig.Client_Secret_ROP,
+                    ApiConsts.resourceOwnerPasswordCredentialGrantType,
+                    signIn.Email,
+                    signIn.Password
+                )
 
-            var token = response.body() as TokenAPI
+                if (!response.isSuccessful) return HelperService.handlerApiError(response)
 
-            HelperService.saveTokenSharedPreferences(token)
+                var token = response.body() as TokenAPI
 
-            return ApiResponse(false)
+                HelperService.saveTokenSharedPreferences(token)
+
+                return ApiResponse(false)
+            } catch (e: Exception) {
+                return HelperService.handleException(e)
+            }
+
+
         }
     }
 }
