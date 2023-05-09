@@ -17,20 +17,28 @@ class LoginService {
             ApiClient.builderService(ApiConsts.authBaseUrl, RetrofitLoginService::class.java, false)
 
         suspend fun signUp(userSignUp: UserSignUp): ApiResponse<Unit> {
-            var tokenResponse = TokenService.getTokenWithClientCredentials()
 
-            if (!tokenResponse.isSuccessful) return ApiResponse(false)
+            try {
+                var tokenResponse = TokenService.getTokenWithClientCredentials()
 
-            var token = tokenResponse.success!!
+                if (!tokenResponse.isSuccessful) return ApiResponse(false)
 
-            var signUpResponse = retrofitTokenServiceWithoutInterceptor.signUp(
-                userSignUp,
-                "bearer ${token.accessToken}"
-            )
+                var token = tokenResponse.success!!
 
-            if (!signUpResponse.isSuccessful) return HelperService.handlerApiError(signUpResponse)
+                var signUpResponse = retrofitTokenServiceWithoutInterceptor.signUp(
+                    userSignUp,
+                    "bearer ${token.accessToken}"
+                )
 
-            return ApiResponse(true)
+                if (!signUpResponse.isSuccessful) return HelperService.handlerApiError(
+                    signUpResponse
+                )
+
+                return ApiResponse(true)
+            } catch (e: Exception) {
+                return HelperService.h(e)
+            }
+
 
         }
 
