@@ -38,7 +38,7 @@ class TokenService {
 
         }
 
-        suspend fun refreshToken(refreshToken: String): ApiResponse<TokenAPI> {
+        fun refreshToken(refreshToken: String): ApiResponse<TokenAPI> {
 
             try {
                 var response = retrofitTokenServiceWithoutInterceptor.refreshToken(

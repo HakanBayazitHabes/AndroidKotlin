@@ -1,6 +1,7 @@
 package com.hakanbayazithabes.androidkotlin.retrofitService
 
 import com.hakanbayazithabes.androidkotlin.Interceptors.NetworkInterceptor
+import com.hakanbayazithabes.androidkotlin.Interceptors.TokenInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,7 +20,7 @@ class ApiClient {
 
 
             if (existInterceptor) {
-                //interceptor eklenecek
+                clientBuilder.addInterceptor(TokenInterceptor())
             }
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
