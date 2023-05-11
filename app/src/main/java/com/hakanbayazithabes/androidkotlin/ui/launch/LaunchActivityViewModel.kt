@@ -16,7 +16,6 @@ class LaunchActivityViewModel() : ViewModel(), IViewModelState {
     override var errorState: MutableLiveData<ApiError> = MutableLiveData<ApiError>()
 
 
-    @SuppressLint("NullSafeMutableLiveData")
     fun tokenCheck(): LiveData<Boolean> {
         loadingState.value = LoadinState.Loading
 
@@ -31,7 +30,7 @@ class LaunchActivityViewModel() : ViewModel(), IViewModelState {
             loadingState.value = LoadinState.Loaded
 
             if (response.isSuccessful)
-                errorState.value = response.fail
+                errorState.value = response.fail!!
 
         }
 
