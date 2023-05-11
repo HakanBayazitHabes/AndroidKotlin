@@ -7,21 +7,25 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.hakanbayazithabes.androidkotlin.R
+import com.hakanbayazithabes.androidkotlin.databinding.ActivityLoginBinding
 import com.hakanbayazithabes.androidkotlin.ui.signin.SigninFragment
 import com.hakanbayazithabes.androidkotlin.ui.signup.SignupFragment
 
+//import kotlinx.android.synthetic.main.activity_login.*
+
 class LoginActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         var pagerAdapter = ScreenSlidePagerAdapter(this)
         pagerAdapter.addFragment(SigninFragment())
         pagerAdapter.addFragment(SignupFragment())
 
-        var viewPager = findViewById<ViewPager2>(R.id.ViewPagerLogin)
-
-        viewPager.adapter = pagerAdapter
+        binding.ViewPagerLogin.adapter = pagerAdapter
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
@@ -35,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             return fragments.get(position)
         }
 
-        fun addFragment (f: Fragment){
+        fun addFragment(f: Fragment) {
             fragments.add(f)
         }
 
