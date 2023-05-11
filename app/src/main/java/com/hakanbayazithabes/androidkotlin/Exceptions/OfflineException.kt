@@ -1,4 +1,6 @@
 package com.hakanbayazithabes.androidkotlin.Exceptions
 
-class OfflineException(message:String) : Exception(message) {
+import java.io.IOException
+
+class OfflineException(message:String) : IOException(message) {
 }

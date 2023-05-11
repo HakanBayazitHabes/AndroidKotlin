@@ -12,7 +12,7 @@ import retrofit2.Response
 class HelperService {
     companion object {
 
-        fun <T>  handleException(ex: Exception): ApiResponse<T> {
+        fun <T> handleException(ex: Exception): ApiResponse<T> {
             return when (ex) {
                 is OfflineException -> {
                     val exMessage =
@@ -20,15 +20,9 @@ class HelperService {
                     var apiError = ApiError(exMessage, 500, true)
                     ApiResponse(false, fail = apiError)
                 }
-                is Exception -> {
-                    val exMessage =
-                        arrayListOf(GlobalApp.getContext().resources.getString(R.string.ex_comman_error))
-                    var apiError = ApiError(exMessage, 500, true)
-                    ApiResponse(false, fail = apiError)
-                }
                 else -> {
                     val exMessage =
-                        arrayListOf(GlobalApp.getContext().resources.getString(R.string.ex_no_exception))
+                        arrayListOf(GlobalApp.getContext().resources.getString(R.string.ex_comman_error))
                     var apiError = ApiError(exMessage, 500, true)
 
                     ApiResponse(false, fail = apiError)
@@ -46,6 +40,7 @@ class HelperService {
 
             editor.apply()
         }
+
         fun <T1, T2> handlerApiError(response: Response<T1>): ApiResponse<T2> {
             var apiError: ApiError? = null
 
