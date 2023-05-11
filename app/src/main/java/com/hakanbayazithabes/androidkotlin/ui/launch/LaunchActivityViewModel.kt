@@ -23,6 +23,7 @@ class LaunchActivityViewModel() : ViewModel(), IViewModelState {
         var status = MutableLiveData<Boolean>()
 
         viewModelScope.launch {
+
             var response = TokenService.checkToken()
 
             status.value = response.isSuccessful
@@ -31,6 +32,7 @@ class LaunchActivityViewModel() : ViewModel(), IViewModelState {
 
             if (response.isSuccessful)
                 errorState.value = response.fail
+
         }
 
 
