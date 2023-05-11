@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.viewpager2.widget.ViewPager2
 import com.hakanbayazithabes.androidkotlin.R
+import com.hakanbayazithabes.androidkotlin.databinding.ActivityLoginBinding
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentSigupBinding
 import com.hakanbayazithabes.androidkotlin.models.UserSignUp
 
@@ -25,15 +26,18 @@ class SignupFragment : Fragment() {
     private var _binding: FragmentSigupBinding? = null
     private val binding get() = _binding!!
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
         var view = inflater.inflate(R.layout.fragment_sigup, container, false)
-        var viewPagerLogin = view.findViewById<ViewPager2>(R.id.ViewPagerLogin)
+        var LogindActivity = inflater.inflate(R.layout.activity_login, container, false)
         _binding = FragmentSigupBinding.bind(view)
+        var viewPagerLoginBinding = ActivityLoginBinding.bind(LogindActivity)
+        var viewPagerLogin = viewPagerLoginBinding.ViewPagerLogin
+
 
         binding.btnSignin.setOnClickListener {
             var userSignUp = UserSignUp(
