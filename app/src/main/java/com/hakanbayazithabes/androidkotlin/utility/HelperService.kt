@@ -12,7 +12,7 @@ import retrofit2.Response
 class HelperService {
     companion object {
 
-        fun <T> handleException(ex: Exception): ApiResponse<T> {
+        fun <T>  handleException(ex: Exception): ApiResponse<T> {
             return when (ex) {
                 is OfflineException -> {
                     val exMessage =
