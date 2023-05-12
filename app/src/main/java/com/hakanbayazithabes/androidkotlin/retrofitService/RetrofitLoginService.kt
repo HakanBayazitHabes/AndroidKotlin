@@ -13,16 +13,20 @@ import retrofit2.http.POST
 interface RetrofitLoginService {
 
     @POST("api/user/signup")
-    suspend fun signUp(@Body userSignUp: UserSignUp, @Header("Authrization") authorization: String):
-            Response<ResponseBody>
+    suspend fun signUp(
+        @Body userSignUp: UserSignUp,
+        @Header("Authorization") authorization: String
+    ): Response<ResponseBody>
+
 
     @POST("connect/token")
     @FormUrlEncoded
     suspend fun signIn(
         @Field("client_id") clientId: String,
-        @Field("client_secrets") clientSecret: String,
+        @Field("client_secret") clientSecret: String,
         @Field("grant_type") grantType: String,
         @Field("username") userName: String,
         @Field("password") password: String
+
     ):Response<TokenAPI>
 }

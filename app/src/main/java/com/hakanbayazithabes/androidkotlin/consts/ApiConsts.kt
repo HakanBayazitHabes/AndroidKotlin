@@ -1,10 +1,9 @@
 package com.hakanbayazithabes.androidkotlin.consts
 
 object ApiConsts {
-    const val authBaseUrl = "http://10.0.2.2:5001"
+    const val authBaseUrl = "http://10.0.2.2:5001 "
     const val apihBaseUrl = "http://10.0.2.2:5000"
     const val photoBaseUrl = "http://10.0.2.2:5002"
-    const val clientBaseUrl = "http://10.0.2.2:5001"
 
     const val clientCredentialGrantType = "client_credentials"
     const val resourceOwnerPasswordCredentialGrantType = "password"

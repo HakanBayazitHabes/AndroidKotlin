@@ -22,10 +22,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "ClientId_CC", apiKeyProperties['ClientId_CC'])
-        buildConfigField("String", "Client_Secret_CC", apiKeyProperties['Client_Secret_CC'])
-        buildConfigField("String", "ClientId_ROP", apiKeyProperties['ClientId_ROP'])
-        buildConfigField("String", "Client_Secret_ROP", apiKeyProperties['Client_Secret_ROP'])
+        buildConfigField("String","ClientId_CC", apiKeyProperties["ClientId_CC"])
+        buildConfigField("String","Client_Secret_CC", apiKeyProperties["Client_Secret_CC"])
+        buildConfigField("String","ClientId_ROP", apiKeyProperties["ClientId_ROP"])
+        buildConfigField("String","Client_Secret_ROP", apiKeyProperties["Client_Secret_ROP"])
 
     }
 
@@ -64,6 +64,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation group: 'com.apachat', name: 'loadingbutton-android', version: '1.0.11'
 
 
     // ViewModel

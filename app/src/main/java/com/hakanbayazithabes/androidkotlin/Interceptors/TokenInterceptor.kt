@@ -26,7 +26,7 @@ class TokenInterceptor : Interceptor {
             token = Gson().fromJson(tokenString, TokenAPI::class.java)
 
             request = request.newBuilder()
-                .addHeader("Authorization", "Bearer " + token.accessToken)
+                .addHeader("Authorization", "Bearer " + token.access_token)
                 .build()
         }
         var response = chain.proceed(request)
@@ -35,7 +35,7 @@ class TokenInterceptor : Interceptor {
             Log.i("OkHttp", "AccessToken geçersiz 401 girdi")
 
             if (token != null) {
-                var apiResponse = TokenService.refreshToken(token.refreshToken)
+                var apiResponse = TokenService.refreshToken(token.refresh_token!!)
 
                 if (apiResponse.isSuccessful) {
                     HelperService.saveTokenSharedPreferences(apiResponse.success!!)
@@ -43,11 +43,10 @@ class TokenInterceptor : Interceptor {
                     var newToken = apiResponse.success
 
                     request = request.newBuilder()
-                        .addHeader("Authorization", "Bearer " + newToken!!.accessToken)
+                        .addHeader("Authorization", "Bearer " + newToken!!.access_token)
                         .build()
 
-                }
-                else{
+                } else {
                     //Login ekranına yönlendriielcek
                 }
             }

@@ -10,6 +10,7 @@ import com.hakanbayazithabes.androidkotlin.models.UserSignUp
 import com.hakanbayazithabes.androidkotlin.retrofitService.ApiClient
 import com.hakanbayazithabes.androidkotlin.retrofitService.RetrofitLoginService
 import com.hakanbayazithabes.androidkotlin.utility.HelperService
+import kotlin.math.log
 
 class LoginService {
     companion object {
@@ -21,14 +22,17 @@ class LoginService {
             try {
                 var tokenResponse = TokenService.getTokenWithClientCredentials()
 
-                if (!tokenResponse.isSuccessful) return ApiResponse(false)
+                if (!tokenResponse.isSuccessful) return ApiResponse(false, fail = tokenResponse.fail)
 
                 var token = tokenResponse.success!!
 
                 var signUpResponse = retrofitTokenServiceWithoutInterceptor.signUp(
                     userSignUp,
-                    "bearer ${token.accessToken}"
+                    "bearer ${token.access_token}"
                 )
+                println("Access Token: ${token.access_token}")
+
+
 
                 if (!signUpResponse.isSuccessful) return HelperService.handlerApiError(
                     signUpResponse

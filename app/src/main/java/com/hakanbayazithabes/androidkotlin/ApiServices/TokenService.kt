@@ -32,7 +32,8 @@ class TokenService {
                 if (!response.isSuccessful) return ApiResponse(false)
 
                 return ApiResponse(true, response.body() as TokenAPI)
-            } catch (ex: Exception) {
+            }
+            catch (ex: Exception) {
                 return HelperService.handleException(ex)
             }
 
@@ -44,7 +45,7 @@ class TokenService {
                 var response = retrofitTokenServiceWithoutInterceptor.refreshToken(
                     BuildConfig.ClientId_ROP,
                     BuildConfig.Client_Secret_ROP,
-                    ApiConsts.resourceOwnerPasswordCredentialGrantType,
+                    ApiConsts.refreshTokenCredentialGrantType,
                     refreshToken
                 ).execute()
 
@@ -75,7 +76,7 @@ class TokenService {
 
                 var response =
                     retrofitTokenServiceWithoutInterceptor.checkToken(
-                        token.accessToken,
+                        token.access_token,
                         authorization
                     )
 

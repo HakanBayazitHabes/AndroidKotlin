@@ -1,5 +1,6 @@
 package com.hakanbayazithabes.androidkotlin.ui.signup
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ class SignupViewModel : ViewModel(), IViewModelState {
     override var loadingState: MutableLiveData<LoadinState> = MutableLiveData<LoadinState>()
     override var errorState: MutableLiveData<ApiError> = MutableLiveData<ApiError>()
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun signUp(userSignUp: UserSignUp): LiveData<Boolean> {
 
         var status = MutableLiveData<Boolean>()
@@ -26,11 +28,9 @@ class SignupViewModel : ViewModel(), IViewModelState {
             var response = LoginService.signUp(userSignUp)
 
             status.value = response.isSuccessful
-
             loadingState.value = LoadinState.Loaded
 
-            if (!response.isSuccessful)
-                errorState.value = response.fail!!
+            if (!response.isSuccessful) errorState.value = response.fail
 
         }
         return status
