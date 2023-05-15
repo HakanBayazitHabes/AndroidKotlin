@@ -16,7 +16,6 @@ class SignupViewModel : ViewModel(), IViewModelState {
     override var loadingState: MutableLiveData<LoadinState> = MutableLiveData<LoadinState>()
     override var errorState: MutableLiveData<ApiError> = MutableLiveData<ApiError>()
 
-    @SuppressLint("NullSafeMutableLiveData")
     fun signUp(userSignUp: UserSignUp): LiveData<Boolean> {
 
         var status = MutableLiveData<Boolean>()
@@ -26,11 +25,11 @@ class SignupViewModel : ViewModel(), IViewModelState {
         viewModelScope.launch {
 
             var response = LoginService.signUp(userSignUp)
-
+            println(response.fail)
             status.value = response.isSuccessful
             loadingState.value = LoadinState.Loaded
 
-            if (!response.isSuccessful) errorState.value = response.fail
+            if (!response.isSuccessful) errorState.value = response.fail!!
 
         }
         return status

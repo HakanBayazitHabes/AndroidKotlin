@@ -22,7 +22,10 @@ class LoginService {
             try {
                 var tokenResponse = TokenService.getTokenWithClientCredentials()
 
-                if (!tokenResponse.isSuccessful) return ApiResponse(false, fail = tokenResponse.fail)
+                if (!tokenResponse.isSuccessful) return ApiResponse(
+                    false,
+                    fail = tokenResponse.fail
+                )
 
                 var token = tokenResponse.success!!
 

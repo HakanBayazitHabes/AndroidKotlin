@@ -11,12 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.widget.ThemedSpinnerAdapter.Helper
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.textfield.TextInputLayout
 import com.hakanbayazithabes.androidkotlin.R
 import com.hakanbayazithabes.androidkotlin.databinding.ActivityLoginBinding
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentSigupBinding
 import com.hakanbayazithabes.androidkotlin.models.UserSignUp
+import com.hakanbayazithabes.androidkotlin.utility.HelperService
 import com.hakanbayazithabes.androidkotlin.utility.LoadinState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +44,10 @@ class SignupFragment : Fragment() {
         var viewPagerLogin = requireActivity().findViewById<ViewPager2>(R.id.ViewPagerLogin)
         _binding = FragmentSigupBinding.bind(fragmentView)
 
+
+        viewModel.errorState.observe(viewLifecycleOwner) {
+            HelperService.showErrorMessageByToast(it)
+        }
 
         viewModel.loadingState.observe(viewLifecycleOwner) {
             when (it) {
@@ -86,10 +92,6 @@ class SignupFragment : Fragment() {
 
         builder.show()
 
-    }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
     }
 
 }

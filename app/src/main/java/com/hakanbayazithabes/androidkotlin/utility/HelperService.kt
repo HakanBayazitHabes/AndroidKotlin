@@ -1,6 +1,7 @@
 package com.hakanbayazithabes.androidkotlin.utility
 
 import android.content.Context
+import android.widget.Toast
 import com.google.gson.Gson
 import com.hakanbayazithabes.androidkotlin.Exceptions.OfflineException
 import com.hakanbayazithabes.androidkotlin.R
@@ -52,5 +53,19 @@ class HelperService {
 
             return ApiResponse(false, null, apiError)
         }
+
+        fun showErrorMessageByToast(apiError: ApiError?) {
+            if (apiError == null) return
+            var errorBuilder = StringBuilder()
+
+            if (apiError.IsShow) {
+                for (error in apiError.Errors) {
+                    errorBuilder.append(error + "\n")
+                }
+            }
+            Toast.makeText( GlobalApp.getContext() , errorBuilder.toString(), Toast.LENGTH_LONG)
+                .show()
+        }
+
     }
 }
