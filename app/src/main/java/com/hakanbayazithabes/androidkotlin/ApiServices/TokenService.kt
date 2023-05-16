@@ -63,16 +63,18 @@ class TokenService {
         suspend fun checkToken(): ApiResponse<Unit> {
 
             try {
-                var preferences =
-                    GlobalApp.getContext().getSharedPreferences("ApiToken", Context.MODE_PRIVATE)
+                var preference =
+                    GlobalApp.getContext().getSharedPreferences("token_api", Context.MODE_PRIVATE)
 
                 var tokenString: String? =
-                    preferences.getString("token", null) ?: return ApiResponse(false)
+                    preference.getString("token", null) ?: return ApiResponse(false);
+
 
                 var token: TokenAPI = Gson().fromJson(tokenString, TokenAPI::class.java)
 
                 var authorization: String =
-                    Credentials.basic("resource_product_api", "apisecret")
+                    okhttp3.Credentials.basic("resource_product_api", "apisecret")
+
 
                 var response =
                     retrofitTokenServiceWithoutInterceptor.checkToken(
@@ -82,12 +84,15 @@ class TokenService {
 
                 if (!response.isSuccessful) return ApiResponse(false)
 
+
                 var introspec = response.body() as Introspec
+
 
                 if (!introspec.Active) return ApiResponse(false)
 
+
                 return ApiResponse(true)
-            } catch (ex: Exception) {
+            } catch (ex: java.lang.Exception) {
                 return HelperService.handleException(ex)
             }
 

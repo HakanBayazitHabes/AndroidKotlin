@@ -17,6 +17,7 @@ class LaunchActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(LaunchActivityViewModel::class.java)
 
 
+
         viewModel.tokenCheck().observe(this) {
             var intent = when (it) {
                 true -> {
@@ -27,6 +28,7 @@ class LaunchActivity : AppCompatActivity() {
                 }
             }
             startActivity(intent)
+            finish()
         }
 
     }

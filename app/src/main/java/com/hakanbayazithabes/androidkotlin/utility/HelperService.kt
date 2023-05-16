@@ -33,7 +33,7 @@ class HelperService {
 
         fun saveTokenSharedPreferences(token: TokenAPI) {
             var preference =
-                GlobalApp.getContext().getSharedPreferences("token", Context.MODE_PRIVATE)
+                GlobalApp.getContext().getSharedPreferences("token_api", Context.MODE_PRIVATE)
 
             var editor = preference.edit()
 

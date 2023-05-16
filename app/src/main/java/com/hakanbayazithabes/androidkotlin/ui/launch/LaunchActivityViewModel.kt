@@ -15,10 +15,11 @@ class LaunchActivityViewModel() : ViewModel(), IViewModelState {
     override var loadingState: MutableLiveData<LoadinState> = MutableLiveData<LoadinState>()
     override var errorState: MutableLiveData<ApiError> = MutableLiveData<ApiError>()
 
+    var isSuccessful = MutableLiveData<Boolean>()
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun tokenCheck(): LiveData<Boolean> {
         loadingState.value = LoadinState.Loading
-
         var status = MutableLiveData<Boolean>()
 
         viewModelScope.launch {
@@ -27,15 +28,15 @@ class LaunchActivityViewModel() : ViewModel(), IViewModelState {
 
             status.value = response.isSuccessful
 
-            loadingState.value = LoadinState.Loaded
 
-            if (response.isSuccessful)
-                errorState.value = response.fail!!
+            if (response.isSuccessful) {
+                loadingState.value = LoadinState.Loaded
+
+            } else {
+                errorState.value = response.fail
+            }
 
         }
-
-
         return status
-
     }
 }
