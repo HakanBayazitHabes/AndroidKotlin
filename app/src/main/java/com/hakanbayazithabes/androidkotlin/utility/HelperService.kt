@@ -42,6 +42,15 @@ class HelperService {
             editor.apply()
         }
 
+        fun getTokenSharedPreferences(): TokenAPI? {
+            var preference =
+                GlobalApp.getContext().getSharedPreferences("token_api", Context.MODE_PRIVATE)
+
+            var tokenString: String? = preference.getString("token", null) ?: return null
+
+            return Gson().fromJson(tokenString, TokenAPI::class.java)
+        }
+
         fun <T1, T2> handlerApiError(response: Response<T1>): ApiResponse<T2> {
             var apiError: ApiError? = null
 

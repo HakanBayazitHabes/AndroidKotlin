@@ -47,7 +47,9 @@ class LaunchActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.tokenCheck().observe(this) {
+        viewModel.tokenCheck()
+
+        viewModel.isSuccessful.observe(this) {
             var intent = when (it) {
                 true -> {
                     Intent(this@LaunchActivity, UserActivity::class.java)
