@@ -66,7 +66,7 @@ class LoginService {
 
                 HelperService.saveTokenSharedPreferences(token)
 
-                return ApiResponse(false)
+                return ApiResponse(true)
             } catch (e: Exception) {
                 return HelperService.handleException(e)
             }
