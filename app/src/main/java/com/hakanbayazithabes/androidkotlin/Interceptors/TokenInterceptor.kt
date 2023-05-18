@@ -1,10 +1,12 @@
 package com.hakanbayazithabes.androidkotlin.Interceptors
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.google.gson.Gson
 import com.hakanbayazithabes.androidkotlin.ApiServices.TokenService
 import com.hakanbayazithabes.androidkotlin.models.TokenAPI
+import com.hakanbayazithabes.androidkotlin.ui.login.LoginActivity
 import com.hakanbayazithabes.androidkotlin.utility.GlobalApp
 import com.hakanbayazithabes.androidkotlin.utility.HelperService
 import okhttp3.Interceptor
@@ -47,7 +49,12 @@ class TokenInterceptor : Interceptor {
                         .build()
 
                 } else {
-                    //Login ekranına yönlendriielcek
+
+                    var intent = Intent(GlobalApp.getContext(), LoginActivity::class.java)
+
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                    GlobalApp.getContext().startActivity(intent)
                 }
             }
 
