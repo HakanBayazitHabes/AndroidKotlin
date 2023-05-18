@@ -3,41 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_navigation"
-    app:startDestination="@id/productListFragment">
+    app:startDestination="@id/productListFragmentNav">
 
     <fragment
-        android:id="@+id/productListFragment"
+        android:id="@+id/productListFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.products.productList.ProductListFragment"
-        android:label="fragment_product_list"
-        tools:layout="@layout/fragment_product_list" >
+        android:label="Ürün listeleme"
+        tools:layout="@layout/fragment_product_list">
         <action
             android:id="@+id/action_productListFragment_to_productAddFragment"
-            app:destination="@id/productAddFragment" />
+            app:destination="@id/productAddFragmentNav" />
         <action
             android:id="@+id/action_productListFragment_to_productDetailFragment"
-            app:destination="@id/productDetailFragment" />
+            app:destination="@id/productDetailFragmentNav" />
     </fragment>
     <fragment
-        android:id="@+id/productAddFragment"
+        android:id="@+id/productAddFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.products.productAdd.ProductAddFragment"
-        android:label="fragment_product_add"
+        android:label="Ürün ekleme"
         tools:layout="@layout/fragment_product_add" />
     <fragment
-        android:id="@+id/productDetailFragment"
+        android:id="@+id/productDetailFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.products.productDetail.ProductDetailFragment"
         android:label="fragment_product_detail"
         tools:layout="@layout/fragment_product_detail" >
         <action
             android:id="@+id/action_productDetailFragment_to_productUpdateFragment"
-            app:destination="@id/productUpdateFragment" />
+            app:destination="@id/productUpdateFragmentNav" />
     </fragment>
     <fragment
-        android:id="@+id/productUpdateFragment"
+        android:id="@+id/productUpdateFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.products.productUpdate.ProductUpdateFragment"
         android:label="fragment_product_update"
         tools:layout="@layout/fragment_product_update" />
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/profileFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.user.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
