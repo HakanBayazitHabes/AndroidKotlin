@@ -52,9 +52,9 @@ class ProductService {
 
                 if (!response.isSuccessful) return HelperService.handlerApiError(response)
 
-                var oDataProduct = response.body() as ODataModel<Product>
+                var product = response.body() as Product
 
-                return ApiResponse(true, oDataProduct.Value[0])
+                return ApiResponse(true, product)
 
             } catch (e: Exception) {
                 return HelperService.handleException(e)
