@@ -11,10 +11,13 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.hakanbayazithabes.androidkotlin.R
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductAddBinding
 import com.hakanbayazithabes.androidkotlin.models.Category
 import com.hakanbayazithabes.androidkotlin.models.Product
+import com.hakanbayazithabes.androidkotlin.ui.user.UserActivity
 import com.hakanbayazithabes.androidkotlin.utility.GlobalApp
 
 class ProductAddFragment : Fragment() {
@@ -34,6 +37,9 @@ class ProductAddFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ProductAddViewModel::class.java]
         var root = inflater.inflate(R.layout.fragment_product_add, container, false)
         _binding = FragmentProductAddBinding.bind(root)
+
+        UserActivity.setLoadingStatus(viewModel, viewLifecycleOwner)
+        UserActivity.setErrorStatus(viewModel, viewLifecycleOwner)
 
         viewModel.getCategories().observe(viewLifecycleOwner) {
             ArrayAdapter<Category>(
@@ -74,6 +80,9 @@ class ProductAddFragment : Fragment() {
                     binding.txtAddFragmentPoductPrice.editText?.setText("")
                     binding.txtAddFragmentProductStock.editText?.setText("")
                     binding.txtAddFragmentProductColor.editText?.setText("")
+
+                    findNavController().navigate(R.id.productListFragmentNav)
+
                 }
             }
         }
