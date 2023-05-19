@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.hakanbayazithabes.androidkotlin.R
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductAddBinding
 import com.hakanbayazithabes.androidkotlin.models.Category
+import com.hakanbayazithabes.androidkotlin.models.Product
 import com.hakanbayazithabes.androidkotlin.utility.GlobalApp
 
 class ProductAddFragment : Fragment() {
@@ -43,6 +47,36 @@ class ProductAddFragment : Fragment() {
             }
         }
 
+        binding.btnProductSave.setOnClickListener {
+            //Valdiations
+            var productName = binding.txtAddFragmentProductName.editText?.text.toString()
+            var productPrice = binding.txtAddFragmentPoductPrice.editText?.text.toString()
+            var productStock = binding.txtAddFragmentProductStock.editText?.text.toString()
+            var productColor = binding.txtAddFragmentProductColor.editText?.text.toString()
+
+            var category = binding.spinnerAddFragmentCategories.selectedItem as Category
+
+            var product = Product(
+                0,
+                productName,
+                productPrice.toDouble(),
+                productColor,
+                productStock.toInt(),
+                "",
+                category.Id,
+                null
+            )
+
+            viewModel.addProduct(product, null).observe(viewLifecycleOwner) {
+                if (it != null) {
+                    Toast.makeText(activity, "Ürün Kaydedildi", Toast.LENGTH_LONG).show()
+                    binding.txtAddFragmentProductName.editText?.setText("")
+                    binding.txtAddFragmentPoductPrice.editText?.setText("")
+                    binding.txtAddFragmentProductStock.editText?.setText("")
+                    binding.txtAddFragmentProductColor.editText?.setText("")
+                }
+            }
+        }
         return root
     }
 
