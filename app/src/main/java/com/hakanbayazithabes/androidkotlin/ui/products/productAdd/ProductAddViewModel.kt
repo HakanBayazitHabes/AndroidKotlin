@@ -66,6 +66,8 @@ class ProductAddViewModel : ViewModel(), IViewModelState {
             } else {
                 errorState.value = productResponse.fail
             }
+            loadingState.value = LoadinState.Loaded
+
         }
 
         return productReturn
