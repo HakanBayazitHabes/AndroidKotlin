@@ -24,18 +24,18 @@
             android:padding="15dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_View_product_pick"
                 android:layout_width="match_parent"
                 android:layout_height="206dp"
                 android:src="@drawable/add_photo_24" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_add_fragment_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/input_margin_bottom">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_add_fragment_product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Ürün ismi"
@@ -43,36 +43,36 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_add_fragment_poduct_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/input_margin_bottom">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_add_fragment_poduct_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Ürün fiyat" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_add_fragment_product_stock"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/input_margin_bottom">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_add_fragment_product_stock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ürün stol" />
+                    android:hint="Ürün stok" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_add_fragment_product_color"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/input_margin_bottom">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_add_fragment_product_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Ürün renk" />
