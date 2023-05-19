@@ -27,7 +27,7 @@ interface RetrofitProductService {
     @POST("/odata/products")
     suspend fun addProduct(
         @Body product: Product
-    ): Response<ODataModel<Product>>
+    ): Response<Product>
 
     @PUT("/odata/products({productId})")
     suspend fun updateProduct(
