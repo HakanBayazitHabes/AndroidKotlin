@@ -21,7 +21,7 @@ class PhotoService {
             ApiClient.builderService(
                 ApiConsts.photoBaseUrl,
                 RetrofitPhotoService::class.java,
-                false
+                true
             )
 
         suspend fun uploadPhoto(filterUri: Uri): ApiResponse<Photo> {
