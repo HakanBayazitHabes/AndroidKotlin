@@ -27,6 +27,7 @@
                 android:id="@+id/image_View_product_pick"
                 android:layout_width="match_parent"
                 android:layout_height="206dp"
+                android:layout_marginBottom="15dp"
                 android:src="@drawable/add_photo_24" />
 
             <com.google.android.material.textfield.TextInputLayout
