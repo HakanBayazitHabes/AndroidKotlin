@@ -16,6 +16,33 @@ import com.hakanbayazithabes.androidkotlin.utility.IViewModelState
 import com.hakanbayazithabes.androidkotlin.utility.LoadinState
 import kotlinx.coroutines.launch
 
-class ProductListViewModel : ViewModel() {
+class ProductListViewModel : ViewModel(), IViewModelState {
     //TODO
+    override var loadingState: MutableLiveData<LoadinState> = MutableLiveData<LoadinState>()
+    override var errorState: MutableLiveData<ApiError> = MutableLiveData<ApiError>()
+
+    var products = MutableLiveData<ArrayList<Product>>()
+
+    @SuppressLint("NullSafeMutableLiveData")
+    fun getProducts(page: Int) {
+        if (page == 0) {
+            loadingState.value = LoadinState.Loading
+        }
+
+        viewModelScope.launch {
+            var response = ProductService.productList(page)
+
+            if (response.isSuccessful) {
+                products.value = response.success!!
+            } else {
+                errorState.value = response.fail
+            }
+
+            if (page == 0) {
+                loadingState.value = LoadinState.Loaded
+            }
+        }
+    }
+
+
 }
