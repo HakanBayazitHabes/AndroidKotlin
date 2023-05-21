@@ -54,7 +54,6 @@ class ProductListRecyclerAdapter(
             holder.txtName.text = product.Name
             holder.txtPrice.text = product.Price.toString()
             holder.txtProductCategory.text = product.Category?.Name
-            holder.itemView.setOnClickListener { itemClick(product) }
 
             val product_photo_url = "${ApiConsts.photoBaseUrl}/${product.PhotoPath}"
 
@@ -65,6 +64,22 @@ class ProductListRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return products.size
+    }
+
+    fun addLoading() {
+        var loadingProduct = Product(0, "", 0.0, "", 0, "", 0, null)
+        products.add(loadingProduct)
+        notifyDataSetChanged()
+    }
+
+    fun removeLoading() {
+        products.removeAt(products.size - 1)
+        notifyDataSetChanged()
+    }
+
+    fun addProduct(newProducts: ArrayList<Product>) {
+        products.addAll(newProducts)
+        notifyDataSetChanged()
     }
 
 }
