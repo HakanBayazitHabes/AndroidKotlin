@@ -7,23 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hakanbayazithabes.androidkotlin.R
+import com.hakanbayazithabes.androidkotlin.adapters.ProductListRecyclerAdapter
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductListBinding
+import com.hakanbayazithabes.androidkotlin.utility.GlobalApp
 
 class ProductListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProductListFragment()
-    }
 
     private lateinit var viewModel: ProductListViewModel
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
+    lateinit var linearLayoutManager: LinearLayoutManager
+    var productListRecyclerAdapter: ProductListRecyclerAdapter? = null
+
+    var page: Int = 0
+    var isLoading = false
+    var isLastPage = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this)[ProductListViewModel::class.java]
         var root = inflater.inflate(R.layout.fragment_product_list, container, false)
         _binding = FragmentProductListBinding.bind(root)
 
@@ -31,13 +38,44 @@ class ProductListFragment : Fragment() {
             it.findNavController().navigate(R.id.productAddFragmentNav)
         }
 
-        return root
-    }
+        linearLayoutManager = LinearLayoutManager(GlobalApp.getContext())
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
-        // TODO: Use the ViewModel
+        binding.recyclerViewProducts.layoutManager = linearLayoutManager
+
+        if (page == 0) {
+            viewModel.getProducts(page)
+        } else {
+            binding.recyclerViewProducts.adapter = productListRecyclerAdapter
+        }
+
+        viewModel.products.observe(viewLifecycleOwner) {
+            if (it.size == 0 && page != 0) {
+                productListRecyclerAdapter?.removeLoading()
+                isLoading = false
+                isLastPage = true
+            } else {
+                if (page == 0) {
+                    binding.recyclerViewProducts.apply {
+                        productListRecyclerAdapter = ProductListRecyclerAdapter(it) { product ->
+                            //Recycler içerisindeki bir item tıklandığında burası çalışacak
+                        }
+
+                        adapter = productListRecyclerAdapter
+                    }
+                }
+                if (page != 0) {
+                    productListRecyclerAdapter?.removeLoading()
+
+                    isLoading = false
+
+                    var isExist = productListRecyclerAdapter!!.products.contains(it[0])
+
+                    if (!isExist) productListRecyclerAdapter!!.addProduct(it)
+                }
+            }
+        }
+
+        return root
     }
 
 }
