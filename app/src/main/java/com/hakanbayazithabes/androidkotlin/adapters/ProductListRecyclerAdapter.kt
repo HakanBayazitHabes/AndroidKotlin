@@ -17,8 +17,8 @@ class ProductListRecyclerAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val VIEW_TYPE_LOADING = 1
-    private val VIEW_TYPE_NORMAL = 0
+    private val VIEW_TYPE_LOADING = 0
+    private val VIEW_TYPE_NORMAL = 1
 
     override fun getItemViewType(position: Int): Int {
         return if (products[position].Id == 0) VIEW_TYPE_LOADING else VIEW_TYPE_NORMAL
@@ -57,7 +57,8 @@ class ProductListRecyclerAdapter(
 
             val product_photo_url = "${ApiConsts.photoBaseUrl}/${product.PhotoPath}"
 
-            Picasso.get().load(product_photo_url).into(holder.imgProductImage)
+            Picasso.get().load(product_photo_url).placeholder(R.drawable.baseline_image_24)
+                .error(R.drawable.baseline_image_24).into(holder.imgProductImage)
 
         }
     }
