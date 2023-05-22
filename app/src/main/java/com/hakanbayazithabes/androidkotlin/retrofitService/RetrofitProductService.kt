@@ -19,7 +19,7 @@ interface RetrofitProductService {
         @Query("\$skip") page: Int
     ): Response<ODataModel<Product>>
 
-    @GET("/odata/products({productId})")
+    @GET("/odata/products({productId})?\$expand=category")
     suspend fun getProduct(
         @Path("productId") productId: Int
     ): Response<ODataModel<Product>>
