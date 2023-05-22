@@ -2,15 +2,18 @@ package com.hakanbayazithabes.androidkotlin.ui.products.productList
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hakanbayazithabes.androidkotlin.R
 import com.hakanbayazithabes.androidkotlin.adapters.ProductListRecyclerAdapter
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductListBinding
+import com.hakanbayazithabes.androidkotlin.ui.user.UserActivity
 import com.hakanbayazithabes.androidkotlin.utility.GlobalApp
 
 class ProductListFragment : Fragment() {
@@ -33,6 +36,9 @@ class ProductListFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ProductListViewModel::class.java]
         var root = inflater.inflate(R.layout.fragment_product_list, container, false)
         _binding = FragmentProductListBinding.bind(root)
+
+        UserActivity.setLoadingStatus(viewModel, viewLifecycleOwner)
+        UserActivity.setErrorStatus(viewModel, viewLifecycleOwner)
 
         binding.btnProductAdd.setOnClickListener {
             it.findNavController().navigate(R.id.productAddFragmentNav)
@@ -74,6 +80,32 @@ class ProductListFragment : Fragment() {
                 }
             }
         }
+
+        binding.recyclerViewProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                var visibleItemCount = linearLayoutManager.childCount
+                var totalItemCount = linearLayoutManager.itemCount
+                var firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
+
+
+                if (!isLoading && !isLastPage) {
+                    Log.i(
+                        "okhttp",
+                        "$visibleItemCount + $firstVisibleItemPosition >=  $totalItemCount"
+                    )
+                    if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount)) {
+                        isLoading = true
+                        productListRecyclerAdapter?.addLoading()
+                        page += 5
+                        viewModel.getProducts(page)
+
+                    }
+                }
+            }
+        })
 
         return root
     }
