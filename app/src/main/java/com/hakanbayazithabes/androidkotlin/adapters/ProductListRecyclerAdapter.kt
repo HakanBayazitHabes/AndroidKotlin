@@ -55,10 +55,6 @@ class ProductListRecyclerAdapter(
             holder.txtPrice.text = product.Price.toString()
             holder.txtProductCategory.text = product.Category?.Name
 
-            holder.itemView.setOnClickListener {
-                itemClick(product)
-            }
-
             val product_photo_url = "${ApiConsts.photoBaseUrl}/${product.PhotoPath}"
 
             Picasso.get().load(product_photo_url).placeholder(R.drawable.baseline_image_24)
