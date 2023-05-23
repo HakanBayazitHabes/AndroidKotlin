@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hakanbayazithabes.androidkotlin.R
@@ -64,6 +65,18 @@ class ProductListFragment : Fragment() {
                     binding.recyclerViewProducts.apply {
                         productListRecyclerAdapter = ProductListRecyclerAdapter(it) { product ->
                             //Recycler içerisindeki bir item tıklandığında burası çalışacak
+                            var action =
+                                ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
+                                    product.Id
+                                )
+
+                            var navHostFragment =
+                                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+                            var navController = navHostFragment.navController
+
+
+                            navController.navigate(action)
                         }
 
                         adapter = productListRecyclerAdapter
