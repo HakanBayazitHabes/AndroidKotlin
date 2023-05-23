@@ -38,7 +38,11 @@
         android:id="@+id/productUpdateFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.products.productUpdate.ProductUpdateFragment"
         android:label="fragment_product_update"
-        tools:layout="@layout/fragment_product_update" />
+        tools:layout="@layout/fragment_product_update" >
+        <argument
+            android:name="product"
+            app:argType="com.hakanbayazithabes.androidkotlin.models.Product" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragmentNav"
         android:name="com.hakanbayazithabes.androidkotlin.ui.user.profile.ProfileFragment"
