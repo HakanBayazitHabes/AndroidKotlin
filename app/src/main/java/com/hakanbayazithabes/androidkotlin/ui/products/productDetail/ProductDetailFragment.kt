@@ -8,14 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.hakanbayazithabes.androidkotlin.R
+import com.hakanbayazithabes.androidkotlin.consts.ApiConsts
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductDetailBinding
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductListBinding
+import com.hakanbayazithabes.androidkotlin.models.Product
+import com.hakanbayazithabes.androidkotlin.ui.user.UserActivity
+import com.squareup.picasso.Picasso
 
 class ProductDetailFragment : Fragment() {
 
     val arg: ProductDetailFragmentArgs by navArgs()
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
+
     companion object {
         fun newInstance() = ProductDetailFragment()
     }
@@ -30,7 +35,26 @@ class ProductDetailFragment : Fragment() {
         var root = inflater.inflate(R.layout.fragment_product_detail, container, false)
         _binding = FragmentProductDetailBinding.bind(root)
 
+        UserActivity.setLoadingStatus(viewModel, viewLifecycleOwner)
+        UserActivity.setErrorStatus(viewModel, viewLifecycleOwner)
 
+
+        var p: (Product?) -> Unit = {
+            if (it != null) {
+                binding.txtProductName.text = it.Name
+                binding.txtProductColor.text = it.Color
+                binding.txtProductPrice.text = it.Price.toString()
+                binding.txtProductStock.text = it.Stock.toString()
+                binding.txtProductCategoryName.text = it.Category?.Name
+                var fullPhotoUrl = "${ApiConsts.photoBaseUrl}/${it.PhotoPath}"
+
+                Picasso.get().load(fullPhotoUrl).placeholder(R.drawable.baseline_image_24)
+                    .error(R.drawable.baseline_image_24).into(binding.imageProductPicture)
+
+            }
+        }
+
+        viewModel.getProduct(arg.productId).observe(viewLifecycleOwner, p)
 
 
         return root
