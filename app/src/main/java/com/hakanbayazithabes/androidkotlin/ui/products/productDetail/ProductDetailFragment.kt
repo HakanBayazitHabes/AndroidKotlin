@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.hakanbayazithabes.androidkotlin.R
 import com.hakanbayazithabes.androidkotlin.consts.ApiConsts
 import com.hakanbayazithabes.androidkotlin.databinding.FragmentProductDetailBinding
@@ -56,6 +58,18 @@ class ProductDetailFragment : Fragment() {
 
         viewModel.getProduct(arg.productId).observe(viewLifecycleOwner, p)
 
+        binding.btnProductDelete.setOnClickListener {
+            viewModel.deleteProduct(arg.productId).observe(viewLifecycleOwner) {
+                if (it) {
+                    Snackbar.make(
+                        root,
+                        "ID'si ${arg.productId} olan ürün silinmiştir",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.productListFragmentNav)
+                }
+            }
+        }
 
         return root
     }
