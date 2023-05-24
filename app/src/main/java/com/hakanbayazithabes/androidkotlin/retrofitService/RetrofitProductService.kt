@@ -31,8 +31,8 @@ interface RetrofitProductService {
 
     @PUT("/odata/products({productId})")
     suspend fun updateProduct(
-        @Body product: Product,
-        @Path("productId") productId: Int
+        @Path("productId") productId: Int,
+        @Body product: Product
     ): Response<Unit>
 
     @DELETE("/odata/products({productId})")
