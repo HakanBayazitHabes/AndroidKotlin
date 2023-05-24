@@ -45,13 +45,19 @@ class ProductUpdateViewModel : ViewModel(), IViewModelState {
 
 
     @SuppressLint("NullSafeMutableLiveData")
-    fun updateProduct(product: Product, fileUri: Uri?, photoPath: String): LiveData<Boolean> {
+    fun updateProduct(product: Product, fileUri: Uri?): LiveData<Boolean> {
         loadingState.value = LoadinState.Loading
 
         var statusReturn = MutableLiveData<Boolean>()
 
         viewModelScope.launch {
+
             if (fileUri != null) {
+
+                if (!product.PhotoPath.isNullOrEmpty()) {
+                    PhotoService.deletePhoto(PhotoDelete(product.PhotoPath))
+                }
+
                 var photoResponse = PhotoService.uploadPhoto(fileUri)
 
                 if (photoResponse.isSuccessful) {
@@ -61,9 +67,6 @@ class ProductUpdateViewModel : ViewModel(), IViewModelState {
                 }
             }
 
-            if (!photoPath.isNullOrEmpty()) {
-                PhotoService.deletePhoto(PhotoDelete(photoPath))
-            }
 
             var response = ProductService.updateProduct(product)
 
