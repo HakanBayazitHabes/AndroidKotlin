@@ -63,7 +63,7 @@ class ProductService {
 
         suspend fun updateProduct(product: Product): ApiResponse<Unit>{
             try {
-                var response = retrofitProductServiceInterceptor.updateProduct(product,product.Id)
+                var response = retrofitProductServiceInterceptor.updateProduct(product.Id,product)
 
                 if (!response.isSuccessful) return HelperService.handlerApiError(response)
 
